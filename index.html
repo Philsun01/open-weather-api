@@ -22,10 +22,19 @@
                 <div id = "card block">  
                     <div id = "title" class= "subtitle"></div> 
                     <div id = "searchMenu">  
-                        <div  class = "card-body">
+                        <form id = "form1">
+                            <input type="radio" name="search" value="city" checked> City <br>
+                            <input type="radio" name="search" value="zipcode"> Zipcode <br>
+                            <input type="radio" name="search" value="coordinates"> Coordinates (Lat , Lon) <br>
+                            <input type = "text" id = "searchValue" name = "cityName" value = "Los Angeles" class = "form-control">
+                            <button id = "submit" class="btn btn-primary"> Search for weather </button>
+                        </form>
+                        
+                        <!-- <div  class = "card-body">
+                            
                             <label>City Name</label>
                             <input type = "text" id = "cityInput" name = "cityName" value = "San Francisco" class = "form-control"> 
-                            <button id = "submit" class="btn btn-primary"> Search for weather </button>
+                            <button id = "city" class="btn btn-primary"> Search for weather </button>
                         </div>       
                         <div class = "card-body">
                             <label>Zipcode</label>
@@ -37,7 +46,8 @@
                             <input type = "text" id = "lon" name = "lon" value = "30" class = "form-control">
                             <input type = "text" id = "lat" name = "lat" value = "40" class = "form-control">
                             <button id = "coordinates" class="btn btn-primary"> Search by coordinates </button>
-                        </div>
+                        </div> -->
+
                     </div>
                 </div>
                 <div id = "board" class = "card-body block"></div>

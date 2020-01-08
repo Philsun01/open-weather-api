@@ -1,14 +1,19 @@
 const apiKey = "4123869c338352428705d8a50d36fc6c";
 
 const board = document.querySelector("#board");
+const radio = document.querySelector("#form1");
+radio.addEventListener("click", () => {
+    console.log(radio.elements.search.value);
+})
+
 
 const renderTemp = ({main, name}) => {
     const f = ((main.temp - 273.15) * (9/5) + 32).toFixed(2); 
     board.innerHTML = `<h4>The temperature in ${name} is currently ${f}°F</h4>`;
 }
 
-const notFound = (city) => {
-    board.innerHTML = `${city} is not a valid city`;
+const notFound = (city, type) => {
+    board.innerHTML = `${city} is not a valid ${type}`;
 }
 
 const renderTitle = () => {
@@ -19,9 +24,9 @@ window.addEventListener("hashchange", () => {
     renderTitle();
 })
 
-const render5day = (fiveDay) => {
+const render5day = (fiveDay, city) => {
     console.log(fiveDay);
-    const html = "<h4> The temperature for every 3 hours for next 5 days will be:</h4>" +
+    const html = `<h4> 5 day forecast (by 3 hours) for ${city}:</h4>` +
         "<table>" +
         fiveDay.map(list => {
             const date = Date(list.dt).slice(4,24);
@@ -39,7 +44,7 @@ const fetchCity = async (city) => {
                 if(res.status === 200){
                     res.json().then(res => renderTemp(res))
                 } else {
-                    notFound(city);
+                    notFound(city, "city");
                 }
             })
     }
@@ -47,15 +52,58 @@ const fetchCity = async (city) => {
         const cityAPI = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${apiKey}`;
         fetch(cityAPI).then( (res) => {
                 if(res.status === 200){
-                    res.json().then(res => render5day(res.list))
+                    res.json().then(res => render5day(res.list, city))
                 } else {
-                    notFound(city);
+                    notFound(city, "city");
                 }
             })
     }
 }
 
-const submitCity = document.querySelector("#submit");
+const submitVar = document.querySelector("#submit");
+submitVar.addEventListener("click", (ev)=> {
+    ev.preventDefault();
+    const searchType = radio.elements.search.value;
+    const searchValue = document.querySelector("#searchValue").value;
+    if(searchType === "city"){
+        console.log(searchValue);
+        fetchCity(searchValue);
+    }   
+    if(searchType === "zipcode"){        
+        fetch(`http://api.openweathermap.org/data/2.5/forecast?zip=${searchValue.trim()}&appid=${apiKey}`).then( (res) => {
+            if(res.status === 200){
+                res.json().then(res => {
+                    fetchCity(res.city.name);            })
+            } else {
+                notFound(searchValue, "zipcode");
+            }
+        })
+    }  
+    if(searchType === "coordinates"){
+
+        const lat = searchValue.split(',')[0];
+        const lon = searchValue.split(',')[1];
+        if(isNaN(lat) || isNaN(lon)) {
+            notFound(searchValue, "coordinates");
+        } else {
+            const coord = `http://api.openweathermap.org/data/2.5/weather?lat=${lat.trim()}&lon=${lon.trim()}&appid=${apiKey}`;
+            fetch(coord).
+            then( res => {
+                if(res.status === 200){
+                    res.json().then(res => {
+                        fetchCity(res.name);            })
+                } else {
+                    notFound(searchValue, "coordinates");
+                }
+            })
+        }
+            
+    
+    }  
+    
+})
+
+const submitCity = document.querySelector("#city");
 submitCity.addEventListener("click", (ev)=> {
     ev.preventDefault();
     const city = document.querySelector("#cityInput").value;   
