@@ -1,0 +1,50 @@
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src = "app.js" defer></script>
+        <link rel = "stylesheet" href = "style.css">
+    </head>
+    <body>
+        <div class='container'>
+            <img src = "weather-icons-master/svg/wi-day-sunny-overcast.svg">
+            <h1>Weather Widget</h1>
+            
+            <ul class='nav nav-tabs'>
+              <li class='nav-item'>
+                <a href='#current' class='nav-link'>Current Weather</a>
+              </li>
+              <li class='nav-item'>
+                <a href='#forecast' class='nav-link'>Forecast</a>
+              </li>
+            </ul>
+          </div>
+          <div id = "columns"> 
+                <div id = "card block">  
+                    <div id = "title" class= "subtitle"></div> 
+                    <div id = "searchMenu">  
+                        <div  class = "card-body">
+                            <label>City Name</label>
+                            <input type = "text" id = "cityInput" name = "cityName" value = "San Francisco" class = "form-control"> 
+                            <button id = "submit" class="btn btn-primary"> Search for weather </button>
+                        </div>       
+                        <div class = "card-body">
+                            <label>Zipcode</label>
+                            <input type = "text" id = "zipcode" name = "zipcode" value = "90703" class = "form-control">
+                            <button id = "zip" class="btn btn-primary"> Search by zipcode </button>
+                        </div>
+                        <div class = "card-body">
+                            <label>Geographic coordinates</label>
+                            <input type = "text" id = "lon" name = "lon" value = "30" class = "form-control">
+                            <input type = "text" id = "lat" name = "lat" value = "40" class = "form-control">
+                            <button id = "coordinates" class="btn btn-primary"> Search by coordinates </button>
+                        </div>
+                    </div>
+                </div>
+                <div id = "board" class = "card-body block"></div>
+            </div>
+        </div>
+        
+            
+        
+    </body>
+</html>
